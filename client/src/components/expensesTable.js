@@ -8,8 +8,6 @@ import Expense from './expense';
 const ExpenseTable = () => {
   const { expenses, getExpenses, loading } = useContext(GlobalContext);
 
-  console.log(expenses);
-
   useEffect(() => {
     getExpenses();
     //eslint-disable-next-line react-hooks/exhaustive-deps
