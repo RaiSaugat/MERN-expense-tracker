@@ -1,0 +1,45 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1 rem is
+  font-size: 62.5%; // 1rem = 10px; 10px/16px = 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+a,
+p {
+  font-size: 1.6rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  padding: 0.4rem 0.8rem;
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+select {
+  font-size: 1.6rem;
+  cursor: pointer;
+
+  option {
+    cursor: pointer;
+  }
+}

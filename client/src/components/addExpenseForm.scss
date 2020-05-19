@@ -1,0 +1,29 @@
+.addExpense-form {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    > div {
+      display: flex;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+    }
+
+    label {
+      font-size: 1.8rem;
+      min-width: 100px;
+    }
+
+    input {
+      width: 150px;
+    }
+
+    .info {
+      p {
+        font-size: 1.8rem;
+      }
+    }
+  }
+}

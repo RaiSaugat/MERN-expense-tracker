@@ -1,0 +1,22 @@
+.filter {
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  .tabs__wrapper {
+    margin-bottom: 2rem;
+    ul {
+      display: flex;
+
+      li {
+        font-size: 1.8rem;
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

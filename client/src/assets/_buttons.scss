@@ -1,0 +1,17 @@
+.button {
+  font-size: 1.6rem;
+  outline: none;
+  cursor: pointer;
+  background-color: #ccc;
+  border: none;
+  padding: 0.6rem 1.8rem;
+  border-radius: 4px;
+  margin: 0;
+  min-width: 60px;
+  max-width: 120px;
+
+  &.danger {
+    background-color: red;
+    color: white;
+  }
+}

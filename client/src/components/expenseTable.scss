@@ -1,0 +1,39 @@
+.expense-table {
+  .expense-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    span {
+      font-size: 1.8rem;
+    }
+  }
+
+  .expense-data {
+    .expense {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 1rem;
+
+      &:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      .type {
+        text-transform: capitalize;
+      }
+    }
+
+    .buttons__wrapper {
+      display: flex;
+      align-items: center;
+
+      button {
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

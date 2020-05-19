@@ -1,0 +1,21 @@
+.header {
+  margin-bottom: 1rem;
+  h1 {
+    margin-bottom: 1rem;
+  }
+
+  nav {
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        a {
+          font-size: 2rem;
+        }
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
