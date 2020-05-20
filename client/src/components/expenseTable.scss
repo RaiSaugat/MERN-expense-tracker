@@ -15,6 +15,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 1rem;
+      align-items: center;
 
       &:not(:last-child) {
         margin-bottom: 1rem;
@@ -28,6 +29,11 @@
     .buttons__wrapper {
       display: flex;
       align-items: center;
+
+      .link {
+        margin-right: 1rem;
+        color: black;
+      }
 
       button {
         &:not(:last-child) {

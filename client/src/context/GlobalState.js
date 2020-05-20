@@ -9,6 +9,7 @@ const initialState = {
   expense: null,
   error: null,
   loading: true,
+  filterType: 'all',
 };
 
 // Create Context
@@ -99,6 +100,12 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function setFilterType(type) {
+    try {
+      const res = await axios.get(`/api/v1/expenses/${type}`);
+    } catch (err) {}
+  }
+
   return (
     <GlobalContext.Provider
       value={{
@@ -106,11 +113,13 @@ export const GlobalProvider = ({ children }) => {
         error: state.error,
         loading: state.loading,
         expense: state.expense,
+        filterType: state.filterType,
         deleteExpense,
         addExpense,
         getAllExpenses,
         updateExpense,
         getSelectedExpense,
+        setFilterType,
       }}
     >
       {children}

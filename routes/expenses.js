@@ -16,6 +16,4 @@ router
   .post(updateExpenses)
   .get(getSelectedExpense);
 
-// router.route('/edit/:id').get(getSelectedExpense);
-
 module.exports = router;

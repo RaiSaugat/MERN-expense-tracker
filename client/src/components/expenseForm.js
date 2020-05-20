@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 import './expenseForm.scss';
 import { GlobalContext } from '../context/GlobalState';
 
 const ExpenseForm = ({ expense }) => {
-  const { addExpense } = useContext(GlobalContext);
+  const { addExpense, updateExpense } = useContext(GlobalContext);
+  const params = useParams();
 
   const [amount, setAmount] = useState();
   const [createdAt, setCreatedAt] = useState();
@@ -23,13 +25,21 @@ const ExpenseForm = ({ expense }) => {
     event.preventDefault();
 
     if (createdAt && type && amount) {
-      const newExpense = {
+      const expense = {
         type,
         amount,
         createdAt,
       };
-      addExpense(newExpense);
-      setNote(`${type} of Rs.${amount} has been added`);
+
+      if (params.id) {
+        expense.id = params.id;
+        updateExpense(expense);
+      } else {
+        addExpense(expense);
+      }
+      setNote(
+        `${type} of Rs.${amount} has been ${params.id ? 'updated' : 'added'}`
+      );
     } else {
       setNote(`Please add expense`);
     }
@@ -72,12 +82,12 @@ const ExpenseForm = ({ expense }) => {
             value={createdAt}
             onChange={(event) => {
               setNote('');
-              setCreatedAt(new Date(event.target.value));
+              setCreatedAt(event.target.value);
             }}
           />
         </div>
         <button className="button" onClick={handleExpense}>
-          Add
+          {params.id ? 'Edit' : 'Add'}
         </button>
 
         {note && (

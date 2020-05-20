@@ -18,6 +18,7 @@ export default (state, action) => {
         ...state,
         expenses: [...state.expenses, action.payload],
       };
+
     case 'UPDATE_EXPENSE':
       return {
         ...state,
@@ -28,12 +29,19 @@ export default (state, action) => {
           }),
         ],
       };
+
     case 'DELETE_EXPENSE':
       return {
         ...state,
         expenses: state.expenses.filter(
           (expense) => expense._id !== action.payload
         ),
+      };
+
+    case 'SET_FILTER':
+      return {
+        ...state,
+        filterType: action.payload,
       };
 
     case 'EXPENSE_ERROR':

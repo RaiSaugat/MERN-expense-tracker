@@ -1,7 +1,11 @@
 .header {
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   h1 {
-    margin-bottom: 1rem;
+    font-size: 3em;
   }
 
   nav {

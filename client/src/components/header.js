@@ -6,7 +6,7 @@ import './header.scss';
 const Header = () => {
   return (
     <header className="header">
-      <h1>Expense Tracker</h1>
+      <h1>House Expense Tracker</h1>
       <nav>
         <ul>
           <li>
