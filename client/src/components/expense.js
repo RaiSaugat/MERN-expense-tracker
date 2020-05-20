@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas } from '../utils/format';
@@ -6,12 +7,12 @@ import { numberWithCommas } from '../utils/format';
 const moment = require('moment');
 
 const Expense = ({ expense }) => {
-  const { deleteExpense } = useContext(GlobalContext);
+  const { deleteExpense, updateExpense } = useContext(GlobalContext);
 
   const [showInput, setShowInput] = useState(false);
   const [type, setType] = useState(expense.type);
   const [amount, setAmount] = useState(expense.amount);
-  const [date, setDate] = useState(expense.createdAt);
+  const [date, setDate] = useState(expense.createdAt.slice(0, 10));
 
   return (
     <div className="expense">
@@ -53,22 +54,22 @@ const Expense = ({ expense }) => {
       </p>
       <div className="buttons__wrapper">
         {!showInput ? (
-          <button className="button" onClick={() => setShowInput(true)}>
+          <Link className="button" to={`/edit/${expense._id}`}>
             Edit
-          </button>
+          </Link>
         ) : (
           <button
             className="button"
-            // onClick={() => {
-            //   Expenses.update(expense.id, {
-            //     $set: {
-            //       type,
-            //       amount,
-            //       createdAt: date,
-            //     },
-            //   });
-            //   setShowInput(false);
-            // }}
+            onClick={() => {
+              const updatedValue = {
+                id: expense._id,
+                type,
+                amount,
+                createdAt: date,
+              };
+              updateExpense(updatedValue);
+              setShowInput(false);
+            }}
           >
             Update
           </button>

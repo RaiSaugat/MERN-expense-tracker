@@ -1,15 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
-import './addExpenseForm.scss';
+import './expenseForm.scss';
 import { GlobalContext } from '../context/GlobalState';
 
-const AddExpenseForm = () => {
+const ExpenseForm = ({ expense }) => {
   const { addExpense } = useContext(GlobalContext);
 
   const [amount, setAmount] = useState();
   const [createdAt, setCreatedAt] = useState();
   const [type, setType] = useState('rent');
   const [note, setNote] = useState('');
+
+  useEffect(() => {
+    if (expense) {
+      setAmount(expense.amount);
+      setType(expense.type);
+      setCreatedAt(expense.createdAt.slice(0, 10));
+    }
+  }, [expense]);
 
   const handleExpense = (event) => {
     event.preventDefault();
@@ -34,9 +42,10 @@ const AddExpenseForm = () => {
           <label htmlFor="type">Type</label>
           <select
             name="type"
+            value={type}
             onChange={(event) => {
               setNote('');
-              setType(event.currentTarget.value);
+              setType(event.target.value);
             }}
           >
             <option value="rent">Rent</option>
@@ -48,6 +57,7 @@ const AddExpenseForm = () => {
           <input
             type="number"
             name="amount"
+            value={amount}
             onChange={(event) => {
               setAmount(event.target.value);
               setNote('');
@@ -59,6 +69,7 @@ const AddExpenseForm = () => {
           <input
             type="date"
             name="date"
+            value={createdAt}
             onChange={(event) => {
               setNote('');
               setCreatedAt(new Date(event.target.value));
@@ -79,4 +90,4 @@ const AddExpenseForm = () => {
   );
 };
 
-export default AddExpenseForm;
+export default ExpenseForm;

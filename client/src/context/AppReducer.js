@@ -6,12 +6,28 @@ export default (state, action) => {
         expenses: action.payload,
         loading: false,
       };
+
+    case 'GET_SELECTED_EXPENSE':
+      return {
+        ...state,
+        expense: action.payload,
+      };
+
     case 'ADD_EXPENSE':
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
       };
-
+    case 'UPDATE_EXPENSE':
+      return {
+        ...state,
+        expenses: [
+          ...state.expenses.filter((expense) => {
+            if (expense._id === action.payload._id) return action.payload;
+            return expense;
+          }),
+        ],
+      };
     case 'DELETE_EXPENSE':
       return {
         ...state,

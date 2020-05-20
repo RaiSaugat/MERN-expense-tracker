@@ -4,10 +4,11 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './assets/index.scss';
 
 import Header from './components/header';
-import AddExpenseForm from './components/addExpenseForm';
 
 import { GlobalProvider } from './context/GlobalState';
 import Home from './components/home';
+import EditExpense from './pages/editExpense';
+import AddExpense from './pages/addExpense';
 
 function App() {
   return (
@@ -19,7 +20,10 @@ function App() {
             <Home />
           </Route>
           <Route path="/add">
-            <AddExpenseForm />
+            <AddExpense />
+          </Route>
+          <Route path="/edit/:id">
+            <EditExpense />
           </Route>
         </Switch>
       </Router>

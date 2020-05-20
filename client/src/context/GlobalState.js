@@ -6,6 +6,7 @@ import AppReducer from './AppReducer';
 //Initial state
 const initialState = {
   expenses: [],
+  expense: null,
   error: null,
   loading: true,
 };
@@ -18,11 +19,26 @@ export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions
-  async function getExpenses(id) {
+  async function getAllExpenses(id) {
     try {
       const res = await axios.get('/api/v1/expenses');
       dispatch({
         type: 'GET_EXPENSES',
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'EXPENSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  async function getSelectedExpense(id) {
+    try {
+      const res = await axios.get(`/api/v1/expenses/${id}`);
+      dispatch({
+        type: 'GET_SELECTED_EXPENSE',
         payload: res.data.data,
       });
     } catch (err) {
@@ -68,15 +84,33 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  async function updateExpense(expense) {
+    try {
+      const res = await axios.post(`/api/v1/expenses/${expense.id}`, expense);
+      dispatch({
+        type: 'UPDATE_EXPENSE',
+        payload: res.data.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'EXPENSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         expenses: state.expenses,
         error: state.error,
         loading: state.loading,
+        expense: state.expense,
         deleteExpense,
         addExpense,
-        getExpenses,
+        getAllExpenses,
+        updateExpense,
+        getSelectedExpense,
       }}
     >
       {children}

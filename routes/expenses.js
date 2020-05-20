@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getExpenses,
+  getAllExpenses,
   addExpenses,
   deleteExpenses,
+  updateExpenses,
+  getSelectedExpense,
 } = require('../controllers/expenses');
 
-router.route('/').get(getExpenses).post(addExpenses);
+router.route('/').get(getAllExpenses).post(addExpenses);
 
-router.route('/:id').delete(deleteExpenses);
+router
+  .route('/:id')
+  .delete(deleteExpenses)
+  .post(updateExpenses)
+  .get(getSelectedExpense);
+
+// router.route('/edit/:id').get(getSelectedExpense);
 
 module.exports = router;

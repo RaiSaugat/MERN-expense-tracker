@@ -6,10 +6,10 @@ import { GlobalContext } from '../context/GlobalState';
 import Expense from './expense';
 
 const ExpenseTable = () => {
-  const { expenses, getExpenses, loading } = useContext(GlobalContext);
+  const { expenses, getAllExpenses, loading } = useContext(GlobalContext);
 
   useEffect(() => {
-    getExpenses();
+    getAllExpenses();
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
