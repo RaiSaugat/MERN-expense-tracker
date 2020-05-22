@@ -10,6 +10,8 @@ const initialState = {
   error: null,
   loading: true,
   filterType: 'all',
+  months: [],
+  filterMonth: 'all',
 };
 
 // Create Context
@@ -23,6 +25,7 @@ export const GlobalProvider = ({ children }) => {
   async function getAllExpenses(id) {
     try {
       const res = await axios.get('/api/v1/expenses');
+
       dispatch({
         type: 'GET_EXPENSES',
         payload: res.data.data,
@@ -35,7 +38,7 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function getSelectedExpense(id) {
+  async function getExpenseById(id) {
     try {
       const res = await axios.get(`/api/v1/expenses/${id}`);
       dispatch({
@@ -87,7 +90,7 @@ export const GlobalProvider = ({ children }) => {
 
   async function updateExpense(expense) {
     try {
-      const res = await axios.post(`/api/v1/expenses/${expense.id}`, expense);
+      const res = await axios.patch(`/api/v1/expenses/${expense.id}`, expense);
       dispatch({
         type: 'UPDATE_EXPENSE',
         payload: res.data.data,
@@ -102,8 +105,30 @@ export const GlobalProvider = ({ children }) => {
 
   async function setFilterType(type) {
     try {
-      const res = await axios.get(`/api/v1/expenses/${type}`);
-    } catch (err) {}
+      dispatch({
+        type: 'SET_FILTER',
+        payload: type,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'EXPENSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  function setMonthFilter(month) {
+    try {
+      dispatch({
+        type: 'SET_MONTH_FILTER',
+        payload: month,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'EXPENSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
   }
 
   return (
@@ -114,12 +139,15 @@ export const GlobalProvider = ({ children }) => {
         loading: state.loading,
         expense: state.expense,
         filterType: state.filterType,
+        months: state.months,
+        filterMonth: state.filterMonth,
         deleteExpense,
         addExpense,
         getAllExpenses,
         updateExpense,
-        getSelectedExpense,
+        getExpenseById,
         setFilterType,
+        setMonthFilter,
       }}
     >
       {children}

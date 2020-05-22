@@ -1,11 +1,15 @@
 .header {
-  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: var(--black-1);
+  padding: 1rem;
 
   h1 {
-    font-size: 3em;
+    a {
+      font-size: 3rem;
+      color: var(--white);
+    }
   }
 
   nav {
@@ -14,7 +18,12 @@
       align-items: center;
       li {
         a {
-          font-size: 2rem;
+          color: var(--white);
+          font-size: 1.6rem;
+
+          &.active {
+            border-bottom: 1px solid var(--white);
+          }
         }
         &:not(:last-child) {
           margin-right: 1rem;

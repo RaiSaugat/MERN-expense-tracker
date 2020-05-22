@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { GlobalContext } from '../context/GlobalState';
 import { numberWithCommas } from '../utils/format';
+import { EditIcon, DeleteIcon } from './shared/svgIcon';
 
 const moment = require('moment');
 
@@ -15,15 +16,18 @@ const Expense = ({ expense }) => {
       <p>{`Rs ${numberWithCommas(expense.amount)}`}</p>
       <p>{moment(expense.createdAt).format('MMM Do YYYY')}</p>
       <div className="buttons__wrapper">
-        <Link className="button link" to={`/edit/${expense._id}`}>
-          Edit
+        <Link
+          className="button transparent link icon"
+          to={`/edit/${expense._id}`}
+        >
+          <EditIcon />
         </Link>
 
         <button
-          className="button danger"
+          className="button transparent danger icon"
           onClick={() => deleteExpense(expense._id)}
         >
-          Delete
+          <DeleteIcon />
         </button>
       </div>
     </div>

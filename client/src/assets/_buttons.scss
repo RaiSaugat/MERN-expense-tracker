@@ -9,9 +9,38 @@
   margin: 0;
   min-width: 60px;
   max-width: 120px;
+  transition: all 0.1s ease-in;
+  display: flex;
+  align-items: center;
+
+  &.transparent {
+    background-color: unset;
+    border: 0;
+  }
+
+  &.link,
+  &.edit {
+    border: 1px solid var(--button-calm);
+    color: var(--black);
+
+    &:hover {
+      background-color: var(--button-calm);
+    }
+  }
 
   &.danger {
-    background-color: red;
-    color: white;
+    color: var(--black);
+    border: 1px solid var(--button-danger);
+
+    &:hover {
+      background-color: var(--button-danger);
+    }
+  }
+
+  &.icon {
+    svg {
+      width: 24px;
+      height: 24px;
+    }
   }
 }

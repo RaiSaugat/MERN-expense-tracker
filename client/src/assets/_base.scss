@@ -13,7 +13,8 @@ html {
 
 body {
   box-sizing: border-box;
-  padding: 3rem;
+  // padding: 3rem;
+  font-family: 'Raleway', Arial, Helvetica, sans-serif;
 }
 
 h1 {
@@ -33,11 +34,16 @@ input {
   padding: 0.4rem 0.8rem;
   width: 100%;
   font-size: 1.6rem;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #ccc;
 }
 
 select {
   font-size: 1.6rem;
   cursor: pointer;
+  background-color: unset;
+  border-radius: 4px;
 
   option {
     cursor: pointer;

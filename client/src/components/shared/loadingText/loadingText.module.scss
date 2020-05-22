@@ -1,0 +1,15 @@
+.loadingText {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  p {
+    display: inline-block;
+    font-size: 2rem;
+  }
+}

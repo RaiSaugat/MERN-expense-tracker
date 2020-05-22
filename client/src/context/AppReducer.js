@@ -1,10 +1,24 @@
+const moment = require('moment');
+
 export default (state, action) => {
   switch (action.type) {
     case 'GET_EXPENSES':
+      let monthArr = [];
+      action.payload.map((expense) => {
+        const month = moment(expense.createdAt).format('M');
+        if (!monthArr.includes(month)) {
+          monthArr.push(month);
+        }
+      });
+
+      monthArr.sort((a, b) => a - b);
+      const months = monthArr.map((month) => moment(month, 'M').format('MMMM'));
+
       return {
         ...state,
         expenses: action.payload,
         loading: false,
+        months,
       };
 
     case 'GET_SELECTED_EXPENSE':
@@ -42,6 +56,12 @@ export default (state, action) => {
       return {
         ...state,
         filterType: action.payload,
+      };
+
+    case 'SET_MONTH_FILTER':
+      return {
+        ...state,
+        filterMonth: action.payload,
       };
 
     case 'EXPENSE_ERROR':

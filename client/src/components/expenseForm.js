@@ -47,8 +47,8 @@ const ExpenseForm = ({ expense }) => {
 
   return (
     <div className="addExpense-form">
-      <form>
-        <div className="type">
+      <form className="form">
+        <div className="form__control">
           <label htmlFor="type">Type</label>
           <select
             name="type"
@@ -62,11 +62,12 @@ const ExpenseForm = ({ expense }) => {
             <option value="electricity">Electricity</option>
           </select>
         </div>
-        <div className="amount">
+        <div className="form__control">
           <label htmlFor="amount">Amount</label>
           <input
             type="number"
             name="amount"
+            id="amount"
             value={amount}
             onChange={(event) => {
               setAmount(event.target.value);
@@ -74,11 +75,12 @@ const ExpenseForm = ({ expense }) => {
             }}
           />
         </div>
-        <div className="date">
+        <div className="form__control">
           <label htmlFor="date">Date</label>
           <input
             type="date"
             name="date"
+            id="date"
             value={createdAt}
             onChange={(event) => {
               setNote('');
@@ -86,9 +88,12 @@ const ExpenseForm = ({ expense }) => {
             }}
           />
         </div>
-        <button className="button" onClick={handleExpense}>
-          {params.id ? 'Edit' : 'Add'}
-        </button>
+        <div className="form__control">
+          <label></label>
+          <button className="button transparent edit" onClick={handleExpense}>
+            {params.id ? 'Edit' : 'Add'}
+          </button>
+        </div>
 
         {note && (
           <div className="info">

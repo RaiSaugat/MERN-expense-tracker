@@ -3,6 +3,13 @@
     margin-bottom: 1rem;
   }
 
+  &__expense {
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    width: max-content;
+    background-color: var(--white);
+  }
+
   .tabs__wrapper {
     margin-bottom: 2rem;
     ul {

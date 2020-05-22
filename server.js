@@ -9,13 +9,27 @@ dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
-const expenses = require('./routes/expenses');
+const expenses = require('./routes/expenses-routes');
+
+const user = require('./routes/users-routes');
 
 const app = express();
 
 app.use(express.json()); //get data in req.body in controller
 
 app.use('/api/v1/expenses', expenses);
+
+app.use('/api/v1/user', user);
+
+app.use((error, req, res, next) => {
+  if (res.headerSent) {
+    return next(error);
+  }
+  res.status(error.code || 500).json({
+    success: false,
+    error: error.message || 'An unknown error occurred!',
+  });
+});
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
