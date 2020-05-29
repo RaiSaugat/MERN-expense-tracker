@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--primary-color);
+  padding: 0rem 2rem;
+  height: 50px;
+
+  h1 {
+    a {
+      font-size: 3rem;
+      color: var(--white);
+
+      @media (max-width: 500px) {
+        font-size: 2rem;
+      }
+    }
+  }
+}

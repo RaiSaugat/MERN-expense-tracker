@@ -9,17 +9,25 @@ dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
-const expenses = require('./routes/expenses-routes');
-
-const user = require('./routes/users-routes');
+const expensesRoutes = require('./routes/expenses-routes');
+const usersRoutes = require('./routes/users-routes');
 
 const app = express();
 
 app.use(express.json()); //get data in req.body in controller
 
-app.use('/api/v1/expenses', expenses);
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // controls which domain have access
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE'); //this handles incoming request
+  next();
+});
 
-app.use('/api/v1/user', user);
+app.use('/api/v1/expenses', expensesRoutes);
+app.use('/api/v1/users', usersRoutes);
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {
@@ -27,7 +35,7 @@ app.use((error, req, res, next) => {
   }
   res.status(error.code || 500).json({
     success: false,
-    error: error.message || 'An unknown error occurred!',
+    message: error.message || 'An unknown error occurred!',
   });
 });
 

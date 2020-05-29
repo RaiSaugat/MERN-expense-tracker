@@ -12,14 +12,39 @@
   transition: all 0.1s ease-in;
   display: flex;
   align-items: center;
+  justify-content: center;
+  font-family: 'Raleway', Arial, Helvetica, sans-serif;
+
+  &:disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
 
   &.transparent {
     background-color: unset;
     border: 0;
   }
 
-  &.link,
-  &.edit {
+  &.primary {
+    border: 1px solid var(--primary-color);
+    color: var(--black);
+
+    &:hover {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    &:disabled {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+  }
+
+  &:hover {
+    background-color: #a2a2a2;
+  }
+
+  &.link {
     border: 1px solid var(--button-calm);
     color: var(--black);
 

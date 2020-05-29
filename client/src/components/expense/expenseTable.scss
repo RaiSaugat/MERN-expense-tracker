@@ -1,0 +1,41 @@
+.expense-table {
+  .expense-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-weight: bold;
+    border: 1px solid var(--gray);
+    padding: 1rem 0rem;
+    text-align: center;
+
+    span {
+      font-size: 1.8rem;
+
+      @media (max-width: 500px) {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .expense-data {
+    text-align: center;
+    .expense {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 1rem;
+      align-items: center;
+      padding: 1rem;
+
+      &:nth-child(2n + 1) {
+        background: var(--gray-1);
+      }
+
+      .type {
+        text-transform: capitalize;
+      }
+    }
+
+    .no-expense {
+      margin-top: 2rem;
+    }
+  }
+}

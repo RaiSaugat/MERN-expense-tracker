@@ -1,0 +1,38 @@
+.filter {
+  h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    @media (max-width: 500px) {
+      text-align: center;
+    }
+    select {
+      margin-left: 1rem;
+    }
+  }
+
+  &__expense {
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    width: max-content;
+    background-color: var(--white);
+  }
+
+  .tabs__wrapper {
+    margin-bottom: 2rem;
+    ul {
+      display: flex;
+
+      li {
+        font-size: 1.8rem;
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}

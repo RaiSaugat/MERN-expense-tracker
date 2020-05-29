@@ -1,0 +1,11 @@
+.expense {
+  &__type {
+    text-transform: capitalize;
+    font-weight: bold;
+  }
+
+  &__amount,
+  &__date {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  }
+}

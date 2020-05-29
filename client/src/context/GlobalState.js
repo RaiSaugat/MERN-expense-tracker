@@ -1,17 +1,24 @@
-import React, { createContext, useReducer } from 'react';
-import axios from 'axios';
-
+import React, {
+  createContext,
+  useReducer,
+  useEffect,
+  useCallback,
+} from 'react';
 import AppReducer from './AppReducer';
 
 //Initial state
 const initialState = {
   expenses: [],
+  users: [],
   expense: null,
   error: null,
-  loading: true,
+  loading: false,
   filterType: 'all',
   months: [],
   filterMonth: 'all',
+  isLoggedIn: false,
+  currentUser: null,
+  tokenExpirationDate: null,
 };
 
 // Create Context
@@ -20,15 +27,53 @@ export const GlobalContext = createContext(initialState);
 // Provider Component
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
-
   // Actions
-  async function getAllExpenses(id) {
+  const login = useCallback((user, expirationDate) => {
+    const { userId, token, name, email } = user;
+    const tokenExpirationDate =
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({
+        userId: userId,
+        token: token,
+        name: name,
+        email: email,
+        expiration: tokenExpirationDate.toISOString(),
+      })
+    );
     try {
-      const res = await axios.get('/api/v1/expenses');
+      dispatch({
+        type: 'LOGIN',
+        payload: { user, tokenExpirationDate },
+      });
+    } catch (err) {
+      dispatch({
+        type: 'LOGIN_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }, []);
 
+  const logout = useCallback(() => {
+    localStorage.removeItem('userData');
+    try {
+      dispatch({
+        type: 'LOGOUT',
+        payload: true,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'LOGOUT_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }, []);
+  async function getAllExpenses(expenses) {
+    try {
       dispatch({
         type: 'GET_EXPENSES',
-        payload: res.data.data,
+        payload: expenses,
       });
     } catch (err) {
       dispatch({
@@ -38,12 +83,36 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function getExpenseById(id) {
+  async function getExpenseByUserId(expenses) {
     try {
-      const res = await axios.get(`/api/v1/expenses/${id}`);
+      dispatch({
+        type: 'GET_USER_EXPENSES',
+        payload: expenses,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'EXPENSE_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  function handleLoading(loadingState) {
+    try {
+      dispatch({
+        type: 'HANDLE_LOADING',
+        payload: loadingState,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function getExpenseById(expenseData) {
+    try {
       dispatch({
         type: 'GET_SELECTED_EXPENSE',
-        payload: res.data.data,
+        payload: expenseData,
       });
     } catch (err) {
       dispatch({
@@ -53,12 +122,11 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function deleteExpense(id) {
+  async function deleteExpense(expenseId) {
     try {
-      await axios.delete(`/api/v1/expenses/${id}`);
       dispatch({
         type: 'DELETE_EXPENSE',
-        payload: id,
+        payload: expenseId,
       });
     } catch (err) {
       dispatch({
@@ -69,16 +137,10 @@ export const GlobalProvider = ({ children }) => {
   }
 
   async function addExpense(expense) {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
     try {
-      const res = await axios.post('/api/v1/expenses', expense, config);
       dispatch({
         type: 'ADD_EXPENSE',
-        payload: res.data.data,
+        payload: expense,
       });
     } catch (err) {
       dispatch({
@@ -90,10 +152,9 @@ export const GlobalProvider = ({ children }) => {
 
   async function updateExpense(expense) {
     try {
-      const res = await axios.patch(`/api/v1/expenses/${expense.id}`, expense);
       dispatch({
         type: 'UPDATE_EXPENSE',
-        payload: res.data.data,
+        payload: expense,
       });
     } catch (err) {
       dispatch({
@@ -103,7 +164,21 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
-  async function setFilterType(type) {
+  async function getAllUsers(users) {
+    try {
+      dispatch({
+        type: 'GET_USERS',
+        payload: users,
+      });
+    } catch (err) {
+      dispatch({
+        type: 'USER_ERROR',
+        payload: err.response.data.error,
+      });
+    }
+  }
+
+  function setFilterType(type) {
     try {
       dispatch({
         type: 'SET_FILTER',
@@ -131,23 +206,59 @@ export const GlobalProvider = ({ children }) => {
     }
   }
 
+  useEffect(() => {
+    let logoutTimer;
+    if (
+      state.currentUser &&
+      state.currentUser.token &&
+      state.tokenExpirationDate
+    ) {
+      const remainingTime =
+        state.tokenExpirationDate.getTime() - new Date().getTime();
+      logoutTimer = setTimeout(logout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
+    }
+  }, [logout, state.currentUser, state.tokenExpirationDate]);
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('userData'));
+    if (
+      storedData &&
+      storedData.token &&
+      new Date(storedData.expiration) > new Date()
+    ) {
+      login(storedData, new Date(storedData.expiration));
+    }
+  }, [login]);
+
   return (
     <GlobalContext.Provider
       value={{
         expenses: state.expenses,
+        users: state.users,
         error: state.error,
         loading: state.loading,
         expense: state.expense,
         filterType: state.filterType,
         months: state.months,
         filterMonth: state.filterMonth,
+        isLoggedIn: state.isLoggedIn,
+        currentUser: state.currentUser,
+        token: state.token,
+        userId: state.userId,
         deleteExpense,
         addExpense,
+        getExpenseByUserId,
         getAllExpenses,
         updateExpense,
         getExpenseById,
         setFilterType,
         setMonthFilter,
+        handleLoading,
+        getAllUsers,
+        login,
+        logout,
       }}
     >
       {children}
