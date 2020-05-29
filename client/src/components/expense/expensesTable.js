@@ -56,7 +56,7 @@ const ExpenseTable = () => {
         )}
         {filteredExpense &&
           filteredExpense.map((expense) => {
-            return <ExpenseList key={expense.id} expense={expense} />;
+            return <ExpenseList key={expense._id} expense={expense} />;
           })}
       </div>
     </div>

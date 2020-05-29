@@ -58,9 +58,10 @@ exports.signup = async (req, res, next) => {
 
     const user = await User.create(newUser);
     let token;
+
     try {
       token = jwt.sign(
-        { userId: newUser.id, email: newUser.email },
+        { userId: user._id, email: user.email },
         'supersecret_key',
         { expiresIn: '1h' }
       );
@@ -72,6 +73,7 @@ exports.signup = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
+      name: user.name,
       userId: user._id,
       email: user.email,
       token,
@@ -133,7 +135,7 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       success: true,
       name: existingUser.name,
-      userId: existingUser.id,
+      userId: existingUser._id,
       email: existingUser.email,
       token: token,
     });

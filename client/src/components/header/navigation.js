@@ -7,6 +7,7 @@ import { GlobalContext } from 'context/GlobalState';
 
 const Navigation = () => {
   const { currentUser, logout } = useContext(GlobalContext);
+
   return (
     <React.Fragment>
       <nav className={navigationStyles.nav}>

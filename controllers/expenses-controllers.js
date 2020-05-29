@@ -75,15 +75,12 @@ exports.getExpensesByUserId = async (req, res, next) => {
 exports.addExpenses = async (req, res, next) => {
   const { type, amount, createdAt } = req.body;
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     return next(
       new HttpError('Invalid inputs passed, please check your data'),
       422
     );
   }
-
-  req.userData;
 
   try {
     const newExpense = new Expense({
