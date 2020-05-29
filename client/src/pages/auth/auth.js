@@ -101,63 +101,63 @@ const AuthPage = () => {
           >
             <span>Login</span>
           </button>
-          <div className="card">
-            <form className="form" onSubmit={authSubmitHandler}>
-              <div className="form__control">
-                <input
-                  type="text"
-                  placeholder="Name"
-                  name="name"
-                  value={name}
-                  onChange={(event) => {
-                    setName(event.target.value);
-                  }}
-                />
-              </div>
+        </div>
+        <div className="card">
+          <form className="form" onSubmit={authSubmitHandler}>
+            <div className="form__control">
+              <input
+                type="text"
+                placeholder="Name"
+                name="name"
+                value={name}
+                onChange={(event) => {
+                  setName(event.target.value);
+                }}
+              />
+            </div>
 
-              <div
-                className={`form__control ${
-                  emailError ? 'form__control--error' : ''
-                }`}
-              >
-                <input
-                  placeholder="Email"
-                  type="text"
-                  name="email"
-                  value={email}
-                  onChange={(event) => {
-                    if (event.target.value && !validEmail(event.target.value)) {
-                      setEmailError('Please enter valid email address');
-                    } else {
-                      setEmailError('');
-                    }
-                    setEmail(event.target.value);
-                  }}
-                />
-                {emailError && <p className="form__error">{emailError}</p>}
-              </div>
+            <div
+              className={`form__control ${
+                emailError ? 'form__control--error' : ''
+              }`}
+            >
+              <input
+                placeholder="Email"
+                type="text"
+                name="email"
+                value={email}
+                onChange={(event) => {
+                  if (event.target.value && !validEmail(event.target.value)) {
+                    setEmailError('Please enter valid email address');
+                  } else {
+                    setEmailError('');
+                  }
+                  setEmail(event.target.value);
+                }}
+              />
+              {emailError && <p className="form__error">{emailError}</p>}
+            </div>
 
-              <div className="form__control">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-              </div>
+            <div className="form__control">
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
 
-              {loading && <div className="loader">Loading...</div>}
-              {error && <div className="server__error">{error}</div>}
+            {loading && <div className="loader">Loading...</div>}
+            {error && <div className="server__error">{error}</div>}
 
-              <div className="form__control">
-                <button type="submit" className="button" disabled={disabled}>
-                  <span className="button__signup">Sign Up</span>
-                  <span className="button__login">Login</span>
-                </button>
-              </div>
-            </form>
-          </div>
+            <div className="form__control">
+              <button type="submit" className="button" disabled={disabled}>
+                <span className="button__signup">Sign Up</span>
+                <span className="button__login">Login</span>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       {/* <div className="form__wrapper">

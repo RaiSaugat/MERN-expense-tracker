@@ -5,6 +5,10 @@
   justify-content: center;
   height: 100%;
 
+  @media (max-width: 500px) {
+    justify-content: flex-start;
+  }
+
   .form__wrapper {
     width: 600px;
     height: 400px;
@@ -18,21 +22,34 @@
     );
 
     @media (max-width: 500px) {
-      width: 320px;
-      height: 350px;
-      background: linear-gradient(
-        to bottom,
-        var(--primary-color) 50%,
-        var(--white) 50%
-      );
+      width: 340px;
+      height: 100px;
     }
 
     &.signup {
+      @media (max-width: 500px) {
+        background: linear-gradient(
+          to right,
+          var(--primary-color) 50%,
+          var(--white) 50%
+        );
+
+        .trigger {
+          .card__button--signup {
+            background-color: var(--white);
+            color: var(--primary-color);
+
+            &:hover {
+              background-color: var(--white);
+              color: var(--primary-color);
+            }
+          }
+        }
+      }
       .card {
         left: 50px;
         @media (max-width: 500px) {
-          left: -10px;
-          top: -150px;
+          left: 0;
         }
 
         .form {
@@ -52,6 +69,25 @@
     }
 
     &.login {
+      @media (max-width: 500px) {
+        background: linear-gradient(
+          to left,
+          var(--primary-color) 50%,
+          var(--white) 50%
+        );
+
+        .trigger {
+          .card__button--login {
+            background-color: var(--white);
+            color: var(--primary-color);
+          }
+
+          .card__button--signup {
+            background-color: var(--primary-color);
+            color: var(--white);
+          }
+        }
+      }
       .card {
         .form {
           .form__control {
@@ -73,8 +109,7 @@
       height: 100%;
 
       @media (max-width: 500px) {
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 1fr;
+        height: 100px;
       }
 
       .card__button {
@@ -122,9 +157,10 @@
       left: 240px;
 
       @media (max-width: 500px) {
-        left: -10px;
-        top: 150px;
         width: 340px;
+        left: 0;
+        top: 0;
+        position: relative;
       }
 
       .form {
